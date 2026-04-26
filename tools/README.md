@@ -7,8 +7,7 @@ Oh My Posh, completions, aliases, and small CLI tools.
 
 Run `setup.bat` from this directory.
 
-The setup script first restores missing executables into `bin` from
-`tool-manifest.json`, then runs `install.nu` with that portable `nu.exe`.
+The setup script runs `install.nu` with the portable `bin\nu.exe`.
 
 By default the installed tools home is:
 
@@ -23,10 +22,9 @@ directory.
 
 - `assets` contains Nushell config, completions, custom commands, and Oh My Posh
   themes.
-- `bin` is restored locally from GitHub release assets and then copied into the
-  tools home.
+- `bin` contains portable executables that are too large to keep in Git.
 - Nushell `config.nu`, `env.nu`, and Windows Terminal `settings.json` are backed
   up with a timestamp suffix before being replaced.
 
-The portable bin set currently restores `nu`, Nushell plugins, `oh-my-posh`,
-`rg`, `bat`, `jq`, `yq`, `tre`, and `xh`.
+The expected portable bin set is `nu`, Nushell plugins, `oh-my-posh`, `rg`,
+`bat`, `jq`, `yq`, `tre`, and `xh`.

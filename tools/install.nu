@@ -21,7 +21,16 @@ let defaultTerminalSettings = [ $configDir "terminal.settings.json" ] | path joi
 
 # bin 디렉토리
 let binDir = [ $toolsDir "bin" ] | path join
-let toolManifest = [ $toolsDir "tool-manifest.json" ] | path join
+let expectedBinFiles = [
+    "nu.exe"
+    "oh-my-posh.exe"
+    "rg.exe"
+    "bat.exe"
+    "jq.exe"
+    "yq.exe"
+    "tre.exe"
+    "xh.exe"
+]
 
 # Windows Terminal Path
 let localWindowTerminalPath = [ $env.LOCALAPPDATA "Microsoft" "Windows Terminal" ] | path join
@@ -72,7 +81,7 @@ for dir in ["assets", "bin", "programs"] {
     }
 }
 
-check_manifest_tools $binDir $toolManifest
+check_bin_files $binDir $expectedBinFiles
 
 # 파일 백업 및 덮어쓰기 함수
 def backup_and_overwrite [file_path: string, backup_suffix: string, source_file: string] {
@@ -103,20 +112,14 @@ def render_source [source_file: string] {
         | str replace --all "__WINDOW_ENV_CONFIG_TOOLS_DIR__" $toolsDirForConfig
 }
 
-def check_manifest_tools [bin_dir: string, manifest_path: string] {
-    if not ($manifest_path | path exists) {
-        return
-    }
-
+def check_bin_files [bin_dir: string, expected_files: list<string>] {
     let missing = (
-        open $manifest_path
-        | get tools
-        | each {|tool|
-            let target_name = (try { $tool.targetName } catch { $tool.exeName })
-            let target_path = [ $bin_dir $target_name ] | path join
+        $expected_files
+        | each {|file|
+            let target_path = [ $bin_dir $file ] | path join
 
             if not ($target_path | path exists) {
-                $target_name
+                $file
             }
         }
         | compact
@@ -124,9 +127,9 @@ def check_manifest_tools [bin_dir: string, manifest_path: string] {
 
     if (($missing | length) > 0) {
         print $"Missing tool binaries: ($missing | str join ', ')"
-        print "setup.bat 또는 bootstrap-tools.ps1을 실행하면 bin을 다시 받을 수 있습니다."
+        print "bin 디렉토리에 위 실행 파일을 넣은 뒤 setup.bat을 다시 실행하세요."
     } else {
-        print "All manifest tool binaries are present."
+        print "All expected tool binaries are present."
     }
 }
 

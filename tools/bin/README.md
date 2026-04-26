@@ -2,8 +2,7 @@
 
 This directory is intentionally kept almost empty in Git.
 
-Run `tools\setup.bat` or `tools\bootstrap-tools.ps1` on Windows to restore the
-portable executables listed in `tools\tool-manifest.json`:
+Put the portable executables here before running `tools\setup.bat`:
 
 - `nu.exe` and `nu_plugin_*.exe`
 - `oh-my-posh.exe`
@@ -14,5 +13,4 @@ portable executables listed in `tools\tool-manifest.json`:
 - `tre.exe`
 - `xh.exe`
 
-The binaries are ignored by Git because they are large and reproducible from the
-manifest.
+The binaries are ignored by Git because they are large.
