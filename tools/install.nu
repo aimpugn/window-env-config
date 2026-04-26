@@ -1,88 +1,51 @@
-const SOURCE_TOOLS_DIR = path self .
+# 다음과 같은 구조로 패키징되어 있다고 가정합니다.
+# ├─assets
+# │  ├─configs
+# │  └─themes
+# ├─bin
+# └─programs
+#     └─terminal
+#
+# 경로 설정
+let home = $env.USERPROFILE
+let toolsDir = $"(pwd)"
 
-def main [
-    --target-dir: string = ""
-    --nu-config-path: string = ""
-    --nu-env-path: string = ""
-    --terminal-settings-path: string = ""
-    --allow-missing-tools
-    --skip-terminal-settings
-] {
-    let home = ($env.USERPROFILE? | default $nu.home-dir)
-    let default_target_dir = ([$home "VscodeProjects" "configs" "tools"] | path join)
-    let tools_dir = if ($target_dir | str trim | is-empty) {
-        ($env.WINDOW_ENV_CONFIG_HOME? | default $default_target_dir)
-    } else {
-        $target_dir
-    }
+print $"toolsDir: ($toolsDir)"
 
-    let source_tools_dir = ($SOURCE_TOOLS_DIR | path expand)
-    let target_tools_dir = ($tools_dir | path expand)
-    let assets_dir = [$target_tools_dir "assets"] | path join
-    let config_dir = [$assets_dir "configs"] | path join
-    let default_nu_config = [$config_dir "config.nu"] | path join
-    let default_nu_env = [$config_dir "env.nu"] | path join
-    let default_terminal_settings = [$config_dir "terminal.settings.json"] | path join
-    let bin_dir = [$target_tools_dir "bin"] | path join
-    let nu_config_path = if ($nu_config_path | str trim | is-empty) { $nu.config-path } else { $nu_config_path }
-    let nu_env_path = if ($nu_env_path | str trim | is-empty) { $nu.env-path } else { $nu_env_path }
+# Assets 디렉토리
+let assetsDir = [ $toolsDir "assets" ] | path join
+let configDir = [ $assetsDir "configs" ] | path join
+let defaultNuConfig = [ $configDir "config.nu" ] | path join
+let defaultNuEnv = [ $configDir "env.nu" ] | path join
+let defaultTerminalSettings = [ $configDir "terminal.settings.json" ] | path join
 
-    print $"sourceToolsDir: ($source_tools_dir)"
-    print $"targetToolsDir: ($target_tools_dir)"
-    print $"binDir: ($bin_dir)"
+# bin 디렉토리
+let binDir = [ $toolsDir "bin" ] | path join
+let toolManifest = [ $toolsDir "tool-manifest.json" ] | path join
 
-    print "Create target directories..."
-    for dir in [$target_tools_dir, $assets_dir, $bin_dir] {
-        ensure-dir $dir
-    }
+# Windows Terminal Path
+let localWindowTerminalPath = [ $env.LOCALAPPDATA "Microsoft" "Windows Terminal" ] | path join
 
-    print "Copying package payload..."
-    for dir in ["assets", "bin", "programs"] {
-        copy-payload-dir $dir $source_tools_dir $target_tools_dir
-    }
-    for file in ["setup.bat", "install.nu", "bootstrap-tools.ps1", "tool-manifest.json", "README.md"] {
-        copy-support-file $file $source_tools_dir $target_tools_dir
-    }
+# programs 디렉토리
+let programsDir = [ $toolsDir "programs" ] | path join
+let terminalDir = [ $programsDir "terminal" ] | path join
 
-    let missing = missing-tools $bin_dir ([$source_tools_dir "tool-manifest.json"] | path join)
-    if (($missing | length) > 0) {
-        print $"Missing tool binaries after copy: ($missing | str join ', ')"
-        print "Run tools\\bootstrap-tools.ps1 again after network access is available."
-        if not $allow_missing_tools {
-            error make {
-                msg: "Required tool binaries are missing."
-                help: "Run setup.bat or bootstrap-tools.ps1 first, or pass --allow-missing-tools for template-only verification."
-            }
-        }
-    }
-
-    let backup_suffix = (date now | format date "%Y%m%d_%H%M%S")
-
-    print "Backing up and rendering Nushell configs..."
-    backup-and-render $nu_config_path $backup_suffix $default_nu_config $target_tools_dir
-    backup-and-render $nu_env_path $backup_suffix $default_nu_env $target_tools_dir
-
-    if not $skip_terminal_settings {
-        let terminal_setting_path = if ($terminal_settings_path | str trim | is-empty) {
-            windows-terminal-setting-path
-        } else {
-            $terminal_settings_path
-        }
-        if ($terminal_setting_path | is-empty) {
-            print "Windows Terminal settings path was not detected. Skipping terminal settings."
-        } else {
-            print "Backing up and rendering Windows Terminal settings..."
-            backup-and-render $terminal_setting_path $backup_suffix $default_terminal_settings $target_tools_dir
-        }
-    }
-
-    if (($missing | length) == 0) {
-        print "All manifest tool binaries are present."
-    }
-    print "Done"
+# Windows Terminal 설정 파일 경로 찾기 (안전한 검색)
+let localWindowTerminalSettingPath = if $localWindowTerminalPath != "" {
+    [ $localWindowTerminalPath "settings.json" ] | path join
+} else {
+    print "Windows Terminal 설정 파일을 찾을 수 없습니다."; ""
 }
 
-def ensure-dir [dir: string] {
+print $"configDir: ($configDir)"
+print $"defaultTerminalSettings: ($defaultTerminalSettings)"
+print $"binDir: ($binDir)"
+print $"localWindowTerminalPath: ($localWindowTerminalPath)"
+
+
+# 디렉토리 생성 (존재 여부 확인 후 생성)
+print "Create Directories..."
+for dir in [$toolsDir, $binDir, $programsDir, $assetsDir, $terminalDir] {
     if not ($dir | path exists) {
         mkdir $dir
         print $"Created: ($dir)"
@@ -91,55 +54,28 @@ def ensure-dir [dir: string] {
     }
 }
 
-def copy-payload-dir [
-    name: string,
-    source_root: string,
-    target_root: string
-] {
-    let src = [$source_root $name] | path join
-    let dst = [$target_root $name] | path join
+# 파일 복사 (존재 여부 확인 후 실행)
+print $"Copying assets, bin, programs into ($toolsDir)..."
+for dir in ["assets", "bin", "programs"] {
+    let src = $"./($dir)"
+    let dst = [ $toolsDir $dir ] | path join
 
-    if not ($src | path exists) {
-        print $"Skipping missing payload: ($src)"
-        return
+    if ($src | path exists) {
+        if (($src | path expand) == ($dst | path expand)) {
+            print $"Already in place: ($src)"
+        } else {
+            cp -r -u $src $toolsDir
+            print $"Copied: ($src) -> ($toolsDir)"
+        }
+    } else {
+        print $"Skipping: ($src) does not exist"
     }
-
-    if (same-path $src $dst) {
-        print $"Already in place: ($dst)"
-        return
-    }
-
-    cp -r -u $src $target_root
-    print $"Copied: ($src) -> ($target_root)"
 }
 
-def copy-support-file [
-    name: string,
-    source_root: string,
-    target_root: string
-] {
-    let src = [$source_root $name] | path join
-    let dst = [$target_root $name] | path join
+check_manifest_tools $binDir $toolManifest
 
-    if not ($src | path exists) {
-        return
-    }
-
-    if (same-path $src $dst) {
-        return
-    }
-
-    cp -u $src $target_root
-}
-
-def backup-and-render [
-    file_path: string,
-    backup_suffix: string,
-    source_file: string,
-    tools_dir: string
-] {
-    ensure-dir ($file_path | path dirname)
-
+# 파일 백업 및 덮어쓰기 함수
+def backup_and_overwrite [file_path: string, backup_suffix: string, source_file: string] {
     if ($file_path | path exists) {
         let backup_path = $"($file_path).($backup_suffix)"
         cp $file_path $backup_path
@@ -149,79 +85,63 @@ def backup-and-render [
     }
 
     if ($source_file | path exists) {
-        let rendered = render-template $source_file $tools_dir
-        $rendered | save --force $file_path
-        print $"Rendered: ($source_file) -> ($file_path)"
+        print $"Overwriting: ($file_path) -> ($source_file)"
+        render_source $source_file | save -f $file_path
     } else {
         print $"Source file not found: ($source_file)"
     }
 }
 
-def render-template [
-    source_file: string,
-    tools_dir: string
-] {
-    let tools_dir_for_config = (
-        $tools_dir
+def render_source [source_file: string] {
+    let toolsDirForConfig = (
+        $toolsDir
         | path expand
         | str replace --all "\\" "/"
     )
 
     open --raw $source_file
-        | str replace --all "__WINDOW_ENV_CONFIG_TOOLS_DIR__" $tools_dir_for_config
+        | str replace --all "__WINDOW_ENV_CONFIG_TOOLS_DIR__" $toolsDirForConfig
 }
 
-def windows-terminal-setting-path [] {
-    let local_app_data = ($env.LOCALAPPDATA? | default "")
-    if ($local_app_data | str trim | is-empty) {
-        return ""
-    }
-
-    let candidates = [
-        ([$local_app_data "Packages" "Microsoft.WindowsTerminal_8wekyb3d8bbwe" "LocalState" "settings.json"] | path join)
-        ([$local_app_data "Packages" "Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe" "LocalState" "settings.json"] | path join)
-        ([$local_app_data "Microsoft" "Windows Terminal" "settings.json"] | path join)
-    ]
-
-    let existing = ($candidates | where {|path| $path | path exists})
-    if (($existing | length) > 0) {
-        return ($existing | first)
-    }
-
-    $candidates | first
-}
-
-def missing-tools [
-    bin_dir: string,
-    manifest_path: string
-] {
+def check_manifest_tools [bin_dir: string, manifest_path: string] {
     if not ($manifest_path | path exists) {
-        return []
+        return
     }
 
-    let manifest = open $manifest_path
-    $manifest.tools
-    | each {|tool|
-        let target_name = (try { $tool.targetName } catch { $tool.exeName })
-        let target_path = [$bin_dir $target_name] | path join
-        if not ($target_path | path exists) {
-            $target_name
+    let missing = (
+        open $manifest_path
+        | get tools
+        | each {|tool|
+            let target_name = (try { $tool.targetName } catch { $tool.exeName })
+            let target_path = [ $bin_dir $target_name ] | path join
+
+            if not ($target_path | path exists) {
+                $target_name
+            }
         }
+        | compact
+    )
+
+    if (($missing | length) > 0) {
+        print $"Missing tool binaries: ($missing | str join ', ')"
+        print "setup.bat 또는 bootstrap-tools.ps1을 실행하면 bin을 다시 받을 수 있습니다."
+    } else {
+        print "All manifest tool binaries are present."
     }
-    | compact
 }
 
-def same-path [
-    left: string,
-    right: string
-] {
-    (normalize-path $left) == (normalize-path $right)
+# 백업 및 덮어쓰기 실행
+let backupSuffix = (date now | format date "%Y%m%d_%H%M%S")
+
+print "Backing up and Overwriting Nushell configs..."
+backup_and_overwrite $nu.config-path $backupSuffix $defaultNuConfig
+backup_and_overwrite $nu.env-path $backupSuffix $defaultNuEnv
+
+if $localWindowTerminalSettingPath != "" {
+    print "Backing up and Overwriting Windows Terminal settings..."
+    backup_and_overwrite $localWindowTerminalSettingPath $backupSuffix $defaultTerminalSettings
+} else {
+    print "Windows Terminal 설정 파일이 존재하지 않아 스킵합니다."
 }
 
-def normalize-path [path_value: string] {
-    $path_value
-        | path expand
-        | str replace --all "/" "\\"
-        | str trim --right --char "\\"
-        | str downcase
-}
+print "Done"
