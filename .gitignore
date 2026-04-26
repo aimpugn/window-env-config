@@ -1,8 +1,7 @@
 .DS_Store
 .idea/
 
-# Portable binaries are not tracked.
-tools/bin/*
+# Portable binaries are tracked.
 !tools/bin/README.md
 !tools/bin/.gitkeep
 
