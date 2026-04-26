@@ -1,9 +1,16 @@
 .DS_Store
 .idea/
 
-# Portable binaries are tracked.
+# Local portable binaries downloaded by install-bin-tool are ignored. Existing
+# tracked bootstrap binaries stay tracked until explicitly removed from Git.
+tools/bin/*.exe
+tools/bin/*.dll
+tools/bin/*.pdb
+tools/bin/*.zip
 !tools/bin/README.md
+!tools/bin/README.txt
 !tools/bin/.gitkeep
+!tools/bin/LICENSE*
 
 tools/programs/*
 !tools/programs/.gitkeep

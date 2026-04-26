@@ -5,3 +5,4 @@
 use ./functions/general-function.nu *
 use ./functions/git-function.nu *
 use ./functions/kcf-function.nu *
+use ./functions/bin-tools.nu *

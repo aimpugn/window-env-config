@@ -32,6 +32,8 @@ const TOOLS_DIR = "__WINDOW_ENV_CONFIG_TOOLS_DIR__"
 const BIN_DIR = ([$TOOLS_DIR "bin"] | path join)
 const ASSETS_DIR = ([$TOOLS_DIR "assets"] | path join)
 
+$env.WINDOW_ENV_CONFIG_TOOLS_DIR = $TOOLS_DIR
+$env.WINDOW_ENV_CONFIG_BIN_DIR = $BIN_DIR
 $env.PATH = ($env.PATH | append $BIN_DIR | uniq)
 
 use ([$ASSETS_DIR "nu/nu_scripts/aliases/git/git-aliases.nu"] | path join ) *
@@ -42,4 +44,4 @@ source ([$ASSETS_DIR "configs/.oh-my-posh.nu"] | path join )
 
 # self defined utils
 source ([$ASSETS_DIR "configs/aliases.nu"] | path join )
-source ([$ASSETS_DIR "configs/functions.nu"] | path join )
+source ([$ASSETS_DIR "nu/functions.nu"] | path join )

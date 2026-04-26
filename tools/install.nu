@@ -30,6 +30,7 @@ let expectedBinFiles = [
     "yq.exe"
     "tre.exe"
     "xh.exe"
+    "delta.exe"
 ]
 
 # Windows Terminal Path
@@ -127,7 +128,7 @@ def check_bin_files [bin_dir: string, expected_files: list<string>] {
 
     if (($missing | length) > 0) {
         print $"Missing tool binaries: ($missing | str join ', ')"
-        print "bin 디렉토리에 위 실행 파일을 넣은 뒤 setup.bat을 다시 실행하세요."
+        print "setup 후 Nushell에서 `install-default-bin-tools` 또는 `install-bin-tool <name>`으로 받을 수 있습니다."
     } else {
         print "All expected tool binaries are present."
     }

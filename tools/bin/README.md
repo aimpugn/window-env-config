@@ -12,5 +12,11 @@ Put the portable executables here before running `tools\setup.bat`:
 - `yq.exe`
 - `tre.exe`
 - `xh.exe`
+- `delta.exe`
 
 The binaries are ignored by Git because they are large.
+
+After setup has loaded the included Nushell config, run `install-bin-tool rg`,
+`install-bin-tool delta`, or `install-default-bin-tools` to download the common
+portable tools from GitHub releases. Use `install-bin-tool <name> --method
+winget` when you want Windows Package Manager to install a package instead.

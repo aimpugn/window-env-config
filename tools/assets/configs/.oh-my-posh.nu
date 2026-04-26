@@ -4,7 +4,7 @@ if ($env.config? | is-not-empty) {
 }
 
 $env.POWERLINE_COMMAND = 'oh-my-posh'
-$env.POSH_THEME = "__WINDOW_ENV_CONFIG_TOOLS_DIR__/assets/oh-my-posh/themes/peru.omp.json"
+$env.POSH_THEME = ([$env.WINDOW_ENV_CONFIG_TOOLS_DIR "assets/oh-my-posh/themes/peru.omp.json"] | path join)
 $env.PROMPT_INDICATOR = ""
 $env.POSH_SESSION_ID = (echo "6d5fd4aa-7c78-4fae-902f-e19f99f39f5e")
 $env.POSH_SHELL = "nu"
@@ -14,8 +14,14 @@ $env.POSH_SHELL_VERSION = (version | get version)
 $env.VIRTUAL_ENV_DISABLE_PROMPT = 1
 $env.PYENV_VIRTUALENV_DISABLE_PROMPT = 1
 
-let _omp_executable: string = "__WINDOW_ENV_CONFIG_TOOLS_DIR__/bin/oh-my-posh.exe"
+let _omp_executable: string = ([$env.WINDOW_ENV_CONFIG_BIN_DIR "oh-my-posh.exe"] | path join)
 
+if not ($_omp_executable | path exists) {
+    if $nu.is-interactive {
+        print $"oh-my-posh executable not found: ($_omp_executable)"
+        print "Run `install-bin-tool oh-my-posh` after Nushell starts, or place oh-my-posh.exe in the bin directory."
+    }
+} else {
 # PROMPTS
 
 def --wrapped _omp_get_prompt [
@@ -66,3 +72,4 @@ $env.PROMPT_COMMAND = {||
 }
 
 $env.PROMPT_COMMAND_RIGHT = {|| _omp_get_prompt right }
+}
