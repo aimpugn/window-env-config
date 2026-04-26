@@ -176,7 +176,7 @@ def resolve-bin-tool [
 def latest-release-assets [repo: string] {
     let api = $"https://api.github.com/repos/($repo)/releases/latest"
 
-    ^curl -L --fail --silent --show-error -H "User-Agent: window-env-config" $api
+    ^curl --ssl-revoke-best-effort -L --fail --silent --show-error -H "User-Agent: window-env-config" $api
         | from json
         | get assets
 }
@@ -258,7 +258,7 @@ def install-github-bin-tool [spec: record, force: bool] {
     let download_path = ([ $work_dir $asset.name ] | path join)
 
     print $"Downloading ($spec.name) from ($spec.repo): ($asset.name)"
-    ^curl -L --fail --silent --show-error -o $download_path $asset.browser_download_url
+    ^curl --ssl-revoke-best-effort -L --fail --silent --show-error -o $download_path $asset.browser_download_url
 
     let copied = if (($asset.name | str downcase) | str ends-with ".zip") {
         copy-zip-tool $download_path $spec $bin_dir $force $work_dir
