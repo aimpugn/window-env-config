@@ -1,0 +1,61 @@
+{
+  "tools": [
+    {
+      "name": "nu",
+      "repo": "nushell/nushell",
+      "assetPattern": "^nu-.*-x86_64-pc-windows-msvc\\.zip$",
+      "exeName": "nu.exe",
+      "targetName": "nu.exe",
+      "extraExePatterns": ["nu_plugin_*.exe"]
+    },
+    {
+      "name": "oh-my-posh",
+      "repo": "JanDeDobbeleer/oh-my-posh",
+      "assetPattern": "^posh-windows-amd64\\.exe$",
+      "exeName": "posh-windows-amd64.exe",
+      "targetName": "oh-my-posh.exe"
+    },
+    {
+      "name": "rg",
+      "repo": "BurntSushi/ripgrep",
+      "assetPattern": "^ripgrep-.*-x86_64-pc-windows-msvc\\.zip$",
+      "exeName": "rg.exe",
+      "targetName": "rg.exe"
+    },
+    {
+      "name": "bat",
+      "repo": "sharkdp/bat",
+      "assetPattern": "^bat-.*-x86_64-pc-windows-msvc\\.zip$",
+      "exeName": "bat.exe",
+      "targetName": "bat.exe"
+    },
+    {
+      "name": "jq",
+      "repo": "jqlang/jq",
+      "assetPattern": "^jq-windows-amd64\\.exe$",
+      "exeName": "jq-windows-amd64.exe",
+      "targetName": "jq.exe"
+    },
+    {
+      "name": "yq",
+      "repo": "mikefarah/yq",
+      "assetPattern": "^yq_windows_amd64\\.exe$",
+      "exeName": "yq_windows_amd64.exe",
+      "targetName": "yq.exe"
+    },
+    {
+      "name": "tre",
+      "repo": "dduan/tre",
+      "assetPattern": "^tre-.*-x86_64-pc-windows-msvc\\.zip$",
+      "exeName": "tre.exe",
+      "targetName": "tre.exe"
+    },
+    {
+      "name": "xh",
+      "repo": "ducaale/xh",
+      "assetPattern": "^xh-.*-x86_64-pc-windows-msvc\\.zip$",
+      "exeName": "xh.exe",
+      "targetName": "xh.exe"
+    }
+  ]
+}

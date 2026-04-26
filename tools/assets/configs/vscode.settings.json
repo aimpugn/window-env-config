@@ -1,0 +1,502 @@
+{
+    // ************************************ Security start ************************************
+    "security.workspace.trust.untrustedFiles": "open",
+    // ************************************ End Security ************************************
+
+    // ************************************ Git start ************************************
+    "git.openRepositoryInParentFolders": "never",
+    "git.rebaseWhenSync": true,
+    "git.enableSmartCommit": true,
+    "git.pruneOnFetch": true,
+    "git.untrackedChanges": "separate",
+    "[.gitconfig]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    // ************************************ End Git ************************************
+
+    // ************************************ Editor start ************************************
+    "editor.formatOnSave": true,
+    //   "editor.formatOnType": true,
+    "editor.autoIndent": "full",
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.useTabStops": true, // 들여쓰기 및 내어쓰기 동작을 더 정확하고 일관성 있게 만들기 위해 사용하는 옵션
+    "editor.rulers": [80, 90],
+    "editor.largeFileOptimizations": true,
+    "editor.copyWithSyntaxHighlighting": false,
+    "editor.fontFamily": "consolas, 'Malgun Gothic', D2Coding, 'Hack Nerd Font'",
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.enabled": false,
+    "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 120,
+    "editor.fontSize": 14,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.inlineSuggest.showToolbar": "always",
+    "editor.accessibilitySupport": "off",
+    "editor.renderControlCharacters": true,
+    "editor.renderWhitespace": "all",
+    "editor.semanticTokenColorCustomizations": {
+        "[Atom One Dark]": {
+            "enabled": true
+        }
+    },
+    "editor.tokenColorCustomizations": {
+        "[Atom One Dark]": {
+            "textMateRules": [
+                {
+                    "scope": "markup.inline.raw.string.markdown",
+                    "settings": {
+                        "foreground": "#f8a31a"
+                    }
+                },
+                {
+                    "scope": "comment",
+                    "settings": {
+                        "foreground": "#919aa9",
+                        "fontStyle": "italic"
+                    }
+                },
+                {
+                    "scope": "markup.quote.markdown",
+                    "settings": {
+                        "foreground": "#919aa9",
+                        "fontStyle": "italic"
+                    }
+                }
+            ]
+        }
+    },
+    // "editor.wrappingIndent": "same",
+    // "editor.tabSize": 4, prettier tabWidth 설정과 충돌
+    // "editor.indentSize": 4, prettier tabWidth 설정과 충돌
+    // ************************************ End Editor ************************************
+
+    // ************************************ Prettier start ************************************
+    "prettier.tabWidth": 4,
+    "prettier.singleQuote": true,
+    "prettier.useTabs": false,
+    "prettier.bracketSpacing": true,
+    "prettier.proseWrap": "preserve",
+    "prettier.arrowParens": "avoid",
+    "prettier.jsxSingleQuote": true,
+    "prettier.semi": true,
+    "prettier.trailingComma": "all",
+    "prettier.singleAttributePerLine": true,
+    "prettier.printWidth": 80,
+    "prettier.insertPragma": false, // 상단에 `@format` 넣지 않음
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        // "editor.indentSize": 2,
+        "prettier.tabWidth": 2
+    },
+    "[dockercompose]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.autoIndent": "advanced"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "[toml]": {
+        "editor.defaultFormatter": "tamasfe.even-better-toml"
+    },
+    "[dockerfile]": {
+        "editor.autoSurround": "languageDefined",
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    // ************************************ End Prettier ************************************
+
+    // ************************************ JavaScript start ************************************
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "javascript.suggest.paths": false,
+    // ************************************ End JavaScript ************************************
+
+    // ************************************ TypeScript start ************************************
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "typescript.suggest.paths": true,
+    "typescript.tsserver.log": "off",
+    // ************************************ End TypeScript ************************************
+
+    // ************************************ JSON start ************************************
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.tabWidth": 4
+    },
+    "[jsonc]": {
+        // formatter가 동작하지 않음
+        // "editor.defaultFormatter": "Jota0222.multi-formatter",
+        // "multiFormatter.formatterList": [
+        //   "esbenp.prettier-vscode",
+        //   "satokaz.vscode-bs-ctrlchar-remover"
+        // ],
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "prettier.tabWidth": 4
+    },
+    "json.schemas": [
+        // package.json 파일에 대한 정확한 스키마를 지정할 수 있습니다
+        // https://code.visualstudio.com/Docs/languages/json#_json-schemas-and-settings
+        {
+            "fileMatch": ["package.json"],
+            "url": "https://json.schemastore.org/package.json"
+        }
+    ],
+    // ************************************ End JSON ************************************
+
+    // ************************************ Rust start ************************************
+    "[rust]": {
+        "editor.semanticHighlighting.enabled": true,
+        "editor.defaultFormatter": "rust-lang.rust-analyzer",
+        "editor.formatOnSave": true,
+        "editor.indentSize": 4
+    },
+    // "rust-analyzer.rustfmt.overrideCommand": [
+    //     "/opt/homebrew/opt/rustup/bin/rustfmt"
+    // ],
+    "rust-analyzer.linkedProjects": [
+        "/Users/rody/VscodeProjects/study/computer_architecture/ostep/Cargo.toml"
+    ],
+    "rust-analyzer.restartServerOnConfigChange": true,
+    "rust-analyzer.typing.continueCommentsOnNewline": true,
+    "rust-analyzer.rustfmt.rangeFormatting.enable": true,
+    // ************************************ End Rust ************************************
+
+    // ************************************ Markdown start ************************************
+    "[markdown]": {
+        "editor.formatOnPaste": true,
+        "editor.wordWrap": "wordWrapColumn",
+        "editor.wordWrapColumn": 100,
+        "editor.defaultFormatter": "DavidAnson.vscode-markdownlint"
+        // "multiFormatter.formatterList": [
+        //     "DavidAnson.vscode-markdownlint",
+        //     "satokaz.vscode-bs-ctrlchar-remover"
+        // ]
+        // "editor.quickSuggestions": {
+        //   "other": "on",
+        //   "comments": "off",
+        //   "strings": "off"
+        // }
+    },
+    "markdownlint.config": {
+        "default": true,
+        "MD007": {
+            "indent": 4,
+            "start_indent": 4
+        },
+        "MD010": {
+            "spaces_per_tab": 4
+        },
+        "MD013": {
+            "code_block_line_length": 10000,
+            "line_length": 10000
+        },
+        "MD014": false,
+        "MD024": {
+            "siblings_only": true
+        },
+        "MD005": true,
+        "MD025": false,
+        "MD032": false
+    },
+    "markdown.extension.list.indentationSize": "inherit",
+    "markdown.extension.tableFormatter.normalizeIndentation": true,
+    // ************************************ End Markdown ************************************
+
+    // ************************************ SQL start ************************************
+    // https://chinsun9.github.io/2020/12/27/SQL-Formatter-vscode-%ED%99%95%EC%9E%A5%EB%8F%84%EA%B5%AC/
+    "[sql]": {
+        // "editor.defaultFormatter": "esbenp.prettier-vscode"
+        "editor.defaultFormatter": "adpyke.vscode-sql-formatter"
+        // "editor.defaultFormatter": "baymax.vscode-custom-sql-formatter"
+    },
+    "SQL-Formatter-VSCode.keywordCase": "upper",
+    "SQL-Formatter-VSCode.indentStyle": "standard",
+    "SQL-Formatter-VSCode.logicalOperatorNewline": "before", // `AND`, `OR`을 앞에 둘지 뒤에 둘지
+    "SQL-Formatter-VSCode.expressionWidth": 100,
+    "SQL-Formatter-VSCode.linesBetweenQueries": 2,
+    "SQL-Formatter-VSCode.denseOperators": false, // `true`면 `p.user_id=28940` 이렇게 붙는다
+    "SQL-Formatter-VSCode.newlineBeforeSemicolon": false,
+    "SQL-Formatter-VSCode.paramTypes": {},
+    "SQL-Formatter-VSCode.ignoreTabSettings": true,
+    // "SQL-Formatter-VSCode.tabSizeOverride": "",
+    // "SQL-Formatter-VSCode.insertSpacesOverride": "",
+    // https://qiita.com/the_red/items/98b15aff395c6fc8a8aa
+    // "sql-formatter.dialect": "sql",
+    // "sql-formatter.uppercase": true,
+    // "sql-formatter.linesBetweenQueries": 1,
+    // ************************************ End SQL ************************************
+
+    // ************************************ PHP start ************************************
+    "[php]": {
+        "editor.defaultFormatter": "junstyle.php-cs-fixer"
+    },
+    // ************************************ PHP end ************************************
+
+    // ************************************ Golang start ************************************
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "always",
+            "source.fixAll": "always"
+        }
+    },
+    "gopls": {
+        "formatting.gofumpt": true,
+        "ui.semanticTokens": true
+    },
+    "go.formatTool": "gofumpt",
+    "go.useLanguageServer": true,
+    // 이 설정은 gopls 언어 서버에 추가적인 플래그를 전달합니다.
+    "go.languageServerFlags": [
+        // -rpc.trace 플래그는 언어 서버의 작동을 추적하고,
+        // 로그를 생성하여 문제 해결 시 유용한 정보를 제공합니다.
+        // 이는 개발 중 문제가 발생했을 때 원인을 파악하는 데 도움을 줍니다.
+        // "-rpc.trace"
+    ],
+    // https://code.visualstudio.com/docs/languages/go
+    "go.toolsManagement.autoUpdate": true,
+    "go.lintTool": "golangci-lint",
+    // "go.lintFlags": ["-c", "/Users/rody/IdeaProjects/portone-go/.golangci.yml"],
+    "go.inferGopath": true,
+    "go.gopath": "/Users/rody/go",
+    // https://github.com/microsoft/vscode-go/issues/1120#issuecomment-334614734
+    "go.testFlags": ["-v"],
+    "go.inlayHints.parameterNames": true,
+    "go.inlayHints.functionTypeParameters": true,
+    "go.inlayHints.constantValues": true,
+    "go.inlayHints.compositeLiteralTypes": true,
+    "go.inlayHints.compositeLiteralFields": true,
+    "go.inlayHints.assignVariableTypes": true,
+    "go.inlayHints.rangeVariableTypes": true,
+    // ************************************ End Golang ************************************
+
+    // ************************************ Java start ************************************
+    // Fleet, IntelliJ IDEA Community Edition 사용
+    // "[java]": {
+    //     // "editor.defaultFormatter": "ilkka.google-java-format"
+    //     "editor.defaultFormatter": "redhat.java"
+    // },
+    // // "java.format.settings.url": "/Users/rody/Library/Application Support/Code/User/globalStorage/vscjava.vscode-java-pack/java-formatter.xml",
+    // "java.format.settings.url": "/Users/rody/VscodeProjects/study/.vscode/eclipse-java-google-style.xml",
+    // // "java.format.settings.profile": "GoogleStyle",
+    // "java.dependency.showMembers": true,
+    // "google-java-format.executable-path": "/opt/homebrew/bin/google-java-format",
+    // ************************************ End Java ************************************
+
+    // ************************************ Neovim start ************************************
+    // "vscode-neovim.neovimExecutablePaths.linux": "nvim",
+    // ************************************ End Neovim ************************************
+
+    // ************************************ Terminal start ************************************
+    "terminal.external.osxExec": "iTerm2.app",
+    "terminal.integrated.copyOnSelection": true,
+    "terminal.integrated.defaultProfile.osx": "zsh",
+    // "terminal.external.windowsExec": "C:\\Users\\rody\\VscodeProjects\\configs\\tools\\programs\\terminal\\WindowsTerminal.exe",
+    "terminal.external.windowsExec": "C:\\Users\\rody\\VscodeProjects\\configs\\tools\\bin\\nu.exe",
+    "terminal.integrated.profiles.windows": {
+        "nu": {
+            "path": "C:\\Users\\rody\\VscodeProjects\\configs\\tools\\bin\\nu.exe"
+        }
+    },
+    "terminal.integrated.defaultProfile.windows": "nu",
+    "terminal.integrated.env.osx": {
+        "FIG_NEW_SESSION": "1",
+        "Q_NEW_SESSION": "1"
+    },
+    "terminal.integrated.fontFamily": "Hack Nerd Font, Symbols Nerd Font",
+    "terminal.integrated.fontSize": 16,
+    "terminal.integrated.fontWeight": "normal",
+    "terminal.integrated.scrollback": 1000000,
+    "terminal.integrated.profiles.osx": {
+        "bash": {
+            "path": "bash",
+            "args": ["-l"],
+            "icon": "terminal-bash"
+        },
+        "zsh": {
+            "path": "/bin/zsh",
+            "args": ["-l"]
+        },
+        "fish": {
+            "path": "/opt/homebrew/bin/fish",
+            "args": ["-l"]
+        },
+        "tmux": {
+            "path": "tmux",
+            "icon": "terminal-tmux"
+        },
+        "pwsh": {
+            "path": "pwsh",
+            "icon": "terminal-powershell"
+        }
+    },
+    "workbench.iconTheme": "symbols",
+    "workbench.colorCustomizations": {
+        // "selection.background": "",
+        "editor.findMatchBorder": "#de605b",
+        "scrollbarSlider.background": "#5f8af7ab", // 95 138 247
+        "scrollbarSlider.hoverBackground": "#5f8af7",
+        "editor.foreground": "#d0d0d0",
+        "terminal.background": "#071a24",
+        "terminal.foreground": "#e5c49e",
+        "terminalCursor.background": "#061923",
+        "terminalCursor.foreground": "#feaf3c",
+        "terminal.ansiBlack": "#1d495f",
+        "terminal.ansiBlue": "#265b63",
+        "terminal.ansiBrightBlack": "#545e65",
+        "terminal.ansiBrightBlue": "#0cc7e4",
+        "terminal.ansiBrightCyan": "#98b9c1",
+        "terminal.ansiBrightGreen": "#749ea9",
+        "terminal.ansiBrightMagenta": "#c7e8f2",
+        "terminal.ansiBrightRed": "#dd9a8a",
+        "terminal.ansiBrightWhite": "#ffe9d7",
+        "terminal.ansiBrightYellow": "#fedaae",
+        "terminal.ansiCyan": "#60b2c2",
+        "terminal.ansiGreen": "#008eab",
+        "terminal.ansiMagenta": "#78dcf4",
+        "terminal.ansiRed": "#dc662e",
+        "terminal.ansiWhite": "#e5c49e",
+        "terminal.ansiYellow": "#feaf3c",
+        "gitDecoration.addedResourceForeground": "#48be58",
+        "gitDecoration.modifiedResourceForeground": "#56aff8",
+        "gitDecoration.renamedResourceForeground": "#56aff8",
+        "gitDecoration.untrackedResourceForeground": "#e97d79",
+        "editorRuler.foreground": "#98a2cc82"
+    },
+    // ************************************ End Workbench ************************************
+
+    // ************************************ Explorer(탐색기) start ************************************
+    "explorer.confirmDelete": false,
+    "explorer.compactFolders": false,
+    "explorer.confirmDragAndDrop": false,
+    // ************************************ End Explorer(탐색기) ************************************
+
+    // ************************************ Files start ************************************
+    "files.trimTrailingWhitespace": true,
+    "files.associations": {
+        "*.json": "jsonc",
+        "package.json": "json"
+    },
+    // "files.autoSave": "afterDelay",
+    "files.insertFinalNewline": true,
+    // ************************************ End Files ************************************
+
+    // ************************************ Deepl start ************************************
+    "deepl.formality": "default",
+    "deepl.tagHandling": "off",
+    "deepl.splitSentences": "1",
+    "deepl.translationMode": "InsertLineBelow",
+    "deepl.defaultTargetLanguage": "KO",
+    // ************************************ End Deepl ************************************
+
+    // ************************************ Copilot start ************************************
+    // "github.copilot.enable": {
+    //     "*": true,
+    //     "plaintext": false,
+    //     "markdown": true,
+    //     "scminput": false
+    // },
+    // ************************************ End Copilot ************************************
+
+    // ************************************ cSpell start ************************************
+    "cSpell.userWords": [
+        "acausal",
+        "aimpugn",
+        "cardinfo",
+        "clientip",
+        "coreapi",
+        "coreutils",
+        "coverprofile",
+        "emph",
+        "Fprintf",
+        "golangci",
+        "gsort",
+        "iamport",
+        "impconstants",
+        "inicis",
+        "iostat",
+        "iotop",
+        "itertools",
+        "kakaopay",
+        "leetcode",
+        "multiword",
+        "nakedret",
+        "neovim",
+        "ODBC",
+        "ostep",
+        "peekable",
+        "Portone",
+        "pprof",
+        "Println",
+        "rody",
+        "rustfmt",
+        "Sprintf",
+        "sqlmock",
+        "struct",
+        "switchcase",
+        "syscall",
+        "toplevel",
+        "Unstarted",
+        "Usecase",
+        "wireshark",
+        "wrapcheck"
+    ],
+    // ************************************ End cSpell ************************************
+
+    // ************************************ Insert Unicode start ************************************
+    "insert-unicode.include-sequences": false,
+    "insert-unicode.enableAliases": false,
+    // ************************************ End Insert Unicode ************************************
+
+    // ************************************ diffEditor start ************************************
+    "diffEditor.ignoreTrimWhitespace": true,
+    "svg.preview.mode": "svg",
+    "typescript.updateImportsOnFileMove.enabled": "never",
+    "workbench.colorTheme": "Atom One Dark",
+    "github.copilot.chat.edits.codesearch.enabled": true,
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    "editor.guides.bracketPairs": true,
+    "chat.commandCenter.enabled": false,
+    "redhat.telemetry.enabled": false,
+    // ************************************ End diffEditor ************************************
+    "java.jdt.ls.java.home": "C:\\Users\\rody\\dev\\jdk\\24.0.2",
+    "java.configuration.runtimes": [
+        {
+            "name": "JavaSE-17",
+            "path": "C:\\Users\\rody\\dev\\jdk\\24.0.2",
+            "default": true
+        }
+    ],
+    // "shfmt.executablePath": "C:\\Users\\rody\\VscodeProjects\\configs\\tools\\bin\\shfmt.exe",
+    // "[shellscript]": {
+    //     "editor.defaultFormatter": "mkhl.shfmt"
+    // }
+    //
+    "sshfs.configs": [
+        {
+            "name": "L1DVWASKCF01",
+            "host": "10.23.18.47",
+            "port": "2200",
+            "username": "rody",
+            "password": true
+        }
+    ],
+    "[ignore]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[properties]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
+}

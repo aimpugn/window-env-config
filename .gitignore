@@ -1,0 +1,10 @@
+.DS_Store
+.idea/
+
+# Portable binaries are restored by tools/bootstrap-tools.ps1.
+tools/bin/*
+!tools/bin/README.md
+!tools/bin/.gitkeep
+
+tools/programs/*
+!tools/programs/.gitkeep
