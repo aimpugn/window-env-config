@@ -56,3 +56,12 @@ If you prefer Windows Package Manager instead of copying a portable exe into
 install-bin-tool rg --method winget
 install-bin-tool custom --method winget --winget Some.PackageId
 ```
+
+## oh-my-posh
+
+### theme 적용하기
+
+```sh
+# oh-my-posh init nu --config path\to\themes\peru.omp.json
+oh-my-posh init nu --config C:\Users\rody\Workspace\window-env-config\tools\assets\oh-my-posh\themes\peru.omp.json
+```
