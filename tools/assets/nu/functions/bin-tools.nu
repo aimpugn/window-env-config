@@ -216,7 +216,8 @@ def copy-zip-tool [archive: string, spec: record, bin_dir: string, force: bool, 
     mkdir $extract_dir
     ^tar -xf $archive -C $extract_dir
 
-    let matches = (glob ([ $extract_dir "**" $spec.exe ] | path join))
+    let glob_pattern = ([ $extract_dir "**" $spec.exe ] | path join | str replace --all '\' '/')
+    let matches = (glob $glob_pattern)
     if (($matches | length) == 0) {
         error make {msg: $"Could not find ($spec.exe) in downloaded archive."}
     }
